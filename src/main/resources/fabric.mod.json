@@ -1,0 +1,22 @@
+{
+	"schemaVersion": 1,
+	"id": "petal_trail",
+	"version": "${version}",
+	"name": "Petal Trail",
+	"description": "Une trainee de petales de cerisier derriere le joueur quand il marche, et un cercle de petales au sol quand il saute. Mod 100% client.",
+	"authors": [],
+	"license": "MIT",
+	"icon": "assets/petal_trail/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"fr.petaltrail.PetalTrailClient"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.18.0",
+		"minecraft": "~1.21.11",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}

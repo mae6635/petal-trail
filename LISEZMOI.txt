@@ -1,0 +1,70 @@
+PETAL TRAIL - mod Fabric pour Minecraft Java 1.21.11 (client uniquement)
+=====================================================================
+
+CE QUE FAIT LE MOD
+- Quand tu marches : des petales de cerisier (ceux du jeu) tombent derriere toi.
+- Quand tu atterris (apres un saut ou une chute) : un cercle de petales s'ouvre doucement au sol et s'estompe, plus grand si la chute est haute, avec un petit nuage de petales.
+- Quand tu tiens une epee, pioche, hache, pelle ou houe : de petites etincelles rose LED (discretes) brillent le long de l'outil, avec parfois un petale.
+- Quand tu marches : une ligne LED lumineuse et continue te suit derriere au ras du sol (environ 5 blocs, plus fine vers la fin) et rentre vers toi quand tu t'arretes.
+- Quand tu fais un kill (cible frappee par toi dans les 5 dernieres secondes) : gros nuage de petales et d'etincelles a l'endroit de sa mort, grand cercle au sol, et un vrai eclair en zigzag avec des branches qui tombe du ciel (environ 9 blocs de haut), coeur clair + lueur de la couleur du theme, avec un flash a l'impact.
+- Une aura rose LED (desactivee par defaut, a activer dans /interfacemod).
+- Mod 100% client : il marche aussi sur les serveurs, sans rien installer cote serveur.
+
+CE QU'IL TE FAUT POUR JOUER
+- Minecraft Java 1.21.11
+- Fabric Loader 0.18.0 ou plus recent
+- Fabric API pour 1.21.11 (a mettre aussi dans le dossier mods)
+
+COMMENT OBTENIR LE FICHIER .jar A METTRE DANS "mods"
+Le dossier contient le code source : il faut le compiler une fois pour obtenir le .jar.
+
+Methode A - IntelliJ IDEA (2025.3 ou plus recent, avec Java 21)
+ 1. Ouvre le dossier "petal-trail" dans IntelliJ (Open).
+ 2. Dans Settings > Build Tools > Gradle, mets "Gradle JVM" sur un JDK 21.
+ 3. Ouvre l'onglet Gradle, puis Tasks > build > build (double clic).
+ 4. Le fichier est dans build/libs/ : prends petal-trail-1.0.0.jar
+    (pas celui qui finit par -sources).
+
+Methode B - Ligne de commande (JDK 21 + Gradle 9.2 installes)
+ 1. Ouvre un terminal dans le dossier "petal-trail".
+ 2. Tape :  gradle build
+ 3. Le fichier est dans build/libs/petal-trail-1.0.0.jar
+
+Methode C - Sans rien installer (GitHub)
+ 1. Cree un depot GitHub et envoie-y tout le contenu du dossier.
+ 2. Onglet Actions : le build se lance tout seul.
+ 3. Telecharge l'artefact "petal-trail-jar" a la fin.
+
+INSTALLATION
+Copie petal-trail-1.0.0.jar dans le dossier  .minecraft/mods
+(avec Fabric API). Lance le jeu avec le profil Fabric.
+
+COMMANDE /interfacemod (interface en jeu)
+Tape /interfacemod dans le chat : un ecran s'ouvre avec 3 onglets (marche aussi sur les serveurs, rien n'est envoye au serveur).
+- Couleurs : choisis la couleur de chaque element avec < et > (petales, ligne LED, cercle d'atterrissage, aura, outil, eclair/explosion) :
+  defaut, rose, rouge, corail, orange, or, jaune, lime, vert, menthe, turquoise, cyan, bleu, indigo, violet, lavande, magenta, fuchsia, marron, blanc, gris, arc-en-ciel.
+  Le bouton "Tout" applique la meme couleur a tous les elements.
+- Reglages : quantite de petales, duree et rayon du cercle, nombre de petales a la mort, hauteur de l'eclair.
+- Effets : active/desactive "Visible sur les autres joueurs" (active par defaut : tous les joueurs que tu vois ont les animations ; les kills restent detectes seulement pour toi), la ligne LED, l'aura, les etincelles de l'outil, l'explosion et l'eclair.
+- "Reinitialiser" remet tout aux valeurs d'origine. Tout est retenu (fichier config/petal_trail.properties).
+Les petales du jeu sont roses a la base : les couleurs tres claires (blanc, lavande...) restent un peu rosees.
+
+REGLAGES
+Tout en haut de src/client/java/fr/petaltrail/PetalTrailClient.java :
+- TRAIL_CHANCE / TRAIL_EXTRA_CHANCE : quantite de petales
+- RING_TICKS / RING_START / RING_MAX_RADIUS : duree et taille du cercle a l'atterrissage ; MIN_FALL : hauteur de chute minimale pour le declencher
+- RING_COLORS : couleurs du cercle (format 0xRRGGBB)
+- LED_TRAIL : false pour couper la ligne ; LED_TRAIL_TICKS / LED_TRAIL_STEPS / LED_TRAIL_HEIGHT / LED_TRAIL_SCALES : longueur, densite, hauteur et epaisseur de la ligne
+- KILL_BURST : false pour couper l'explosion ; KILL_WINDOW_TICKS / KILL_PETALS / KILL_SPARKS : delai de detection, nombre de petales et d'etincelles ; KILL_LIGHTNING : false pour couper l'eclair, BOLT_HEIGHT : sa hauteur (les kills a l'arc ou par un autre joueur ne comptent pas)
+- AURA : false pour couper l'aura ; AURA_POINTS / AURA_RADIUS / AURA_SCALE / AURA_COLORS : densite, distance au corps, taille, couleurs
+- TOOL_GLOW : false pour couper la lueur des outils ; TOOL_GLOW_CHANCE / TOOL_GLOW_SCALE : quantite et taille des etincelles
+Apres une modification, recompile (etape "build") et remplace le .jar.
+
+SI LA COMPILATION ECHOUE
+- Versions refusees : ouvre https://fabricmc.net/develop , choisis 1.21.11 et copie
+  les 4 lignes (minecraft_version, loader_version, loom_version, fabric_api_version)
+  dans gradle.properties.
+- Erreur sur une classe ou une methode Minecraft : copie le message d'erreur
+  complet et envoie-le moi, je corrige le code.
+
+NOTE : ce code n'a pas pu etre compile ni teste dans le jeu pendant sa creation.
